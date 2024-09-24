@@ -5,8 +5,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.Random;
+import java.util.Comparator;
+import java.util.Collections;
+import java.util.Arrays;
 
 public class GameCalculator {
 
@@ -89,7 +95,7 @@ public class GameCalculator {
         return ratingDiffArray;
     }
 
-    public GameCalculator(int ratingDiff, ArrayList<Player> players, int gamesPlayed) throws SQLException {
+    public GameCalculator(int ratingDiff, ArrayList<Player> players, int gamesPlayed) {
         this.ratingDiff = ratingDiff;
         this.players = players;
         this.gamesPlayed = gamesPlayed;

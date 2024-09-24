@@ -2,7 +2,6 @@ package mmsim;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Team {
     private final Player player1;

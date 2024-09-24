@@ -1,6 +1,8 @@
 package mmsim;
 
-import java.util.*;
+import java.util.UUID;
+import java.util.Deque;
+import java.util.ArrayDeque;
 
 public class Player implements Comparable<Player> {
     private final String name;
