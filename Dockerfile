@@ -10,7 +10,7 @@ RUN curl -L https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-b
   unzip -d /opt/gradle gradle.zip && \
   rm gradle.zip
 
-ENV PATH="/opt/gradle/gradle-8.8/bin:${PATH}"
+ENV PATH="/opt/gradle/gradle-${GRADLE_VERSION}/bin:${PATH}"
 
 COPY . /build
 
