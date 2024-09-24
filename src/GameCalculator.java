@@ -102,6 +102,7 @@ public class GameCalculator {
     // the opposite is true as well: players who have lower skill gain fewer elo on a win, and lose more on a loss, as they also have an elo disproportionate to their skill, just in the opposite direction
     // there is a cap and a floor to the elo gained or lost
     public void calculateGamesPersonalSkill() throws IOException {
+        boolean firstTime = true;
         int k = 50;
         Random rng = new Random();
 
@@ -112,7 +113,8 @@ public class GameCalculator {
                 System.out.println(gameNum);
             }
             if (gameNum % (gamesPlayed / 500) == 0 && gameNum != 0) {
-                outputGamesPersonalToCSV(allGamesPlayed);
+                outputGamesPersonalToCSV(allGamesPlayed, firstTime);
+                firstTime = false;
             }
             if (players.isEmpty()) {
                 players.addAll(playersUsed);
@@ -222,7 +224,7 @@ public class GameCalculator {
         players.addAll(playersUsed);
         outputPlayersPersonalToCSV(players);
         if (!allGamesPlayed.isEmpty()) {
-            outputGamesPersonalToCSV(allGamesPlayed);
+            outputGamesPersonalToCSV(allGamesPlayed, firstTime);
         }
         long endTime2 = System.nanoTime();
         long totalTime2 = endTime2 - startTime;
@@ -231,7 +233,8 @@ public class GameCalculator {
     }
 
     // this function simulates the current system, where players gain or lose elo equally irrespective of individual skill
-    public void calculateGamesElo() throws SQLException, IOException {
+    public void calculateGamesElo() throws IOException {
+        boolean firstTime = true;
         int k = 50;
         Random rng = new Random();
 
@@ -242,7 +245,8 @@ public class GameCalculator {
                 System.out.println(gameNum);
             }
             if (gameNum % (gamesPlayed / 500) == 0 && gameNum != 0) {
-                outputGamesToCSV(allGamesPlayed);
+                outputGamesToCSV(allGamesPlayed, firstTime);
+                firstTime = false;
             }
             if (players.isEmpty()) {
                 players.addAll(playersUsed);
@@ -329,7 +333,7 @@ public class GameCalculator {
         players.addAll(playersUsed);
         outputPlayersToCSV(players);
         if (!allGamesPlayed.isEmpty()) {
-            outputGamesToCSV(allGamesPlayed);
+            outputGamesToCSV(allGamesPlayed, firstTime);
         }
     }
 
@@ -381,10 +385,7 @@ public class GameCalculator {
     public void outputPlayersPersonalToCSV(ArrayList<Player> players) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter("playerlistpersonal.csv"));
 
-        if(!Files.exists(Path.of("playerlistpersonal.csv")))
-        {
-            bw.write("id,name,skill,rating,volatility,confidence,games_won,games_played,history\n");
-        }
+        bw.write("id,name,skill,rating,volatility,confidence,games_won,games_played,history\n");
         for (Player p : players) {
             StringBuilder player = new StringBuilder();
             String truncatedUUID = p.getUuid().toString().replaceAll("-", "");
@@ -422,19 +423,14 @@ public class GameCalculator {
         bw.close();
     }
 
-    public void outputGamesToCSV (ArrayList<Game> games) throws IOException {
-        FileWriter fw;
-        if(!Files.exists(Path.of("games.csv"))) {
-            fw = new FileWriter("games.csv");
-        }
-        else
+    public void outputGamesToCSV (ArrayList<Game> games, Boolean firstTime) throws IOException {
+        if(firstTime)
         {
-            fw = new FileWriter("games.csv", true);
+            BufferedWriter bw = new BufferedWriter(new FileWriter("games.csv"));
+            bw.write("game_id, winning_team, losing_team\n");
+            bw.close();
         }
-        BufferedWriter bw = new BufferedWriter(fw);
-        if(!Files.exists(Path.of("games.csv"))) {
-            bw.append("game_id, winning_team, losing_team\n");
-        }
+        BufferedWriter bw = new BufferedWriter(new FileWriter("games.csv", true));
         for (Game g : games) {
             StringBuilder sb = new StringBuilder();
             String truncatedUUID = g.getGameID().toString().replaceAll("-", "");
@@ -448,25 +444,17 @@ public class GameCalculator {
         }
 
         bw.close();
-        fw.close();
         allGamesPlayed.clear();
     }
 
-    public void outputGamesPersonalToCSV (ArrayList<Game> games) throws IOException {
-        FileWriter fw;
-        if(!Files.exists(Path.of("gamespersonal.csv"))) {
-            fw = new FileWriter("gamespersonal.csv");
+    public void outputGamesPersonalToCSV (ArrayList<Game> games, Boolean firstTime) throws IOException {
+        if(firstTime) {
+            BufferedWriter bw = new BufferedWriter(new FileWriter("gamespersonal.csv", false));
+            bw.write("game_id, winning_team, losing_team\n");
+            bw.close();
         }
-        else
-        {
-            fw = new FileWriter("gamespersonal.csv", true);
-        }
+        BufferedWriter bw = new BufferedWriter(new FileWriter("gamespersonal.csv", true));
 
-        BufferedWriter bw = new BufferedWriter(fw);
-
-        if(!Files.exists(Path.of("gamespersonal.csv"))) {
-            bw.append("game_id, winning_team, losing_team\n");
-        }
         for (Game g : games) {
             StringBuilder sb = new StringBuilder();
             String truncatedUUID = g.getGameID().toString().replaceAll("-", "");
@@ -479,7 +467,6 @@ public class GameCalculator {
             bw.append(sb.toString());
         }
         bw.close();
-        fw.close();
         allGamesPlayed.clear();
     }
 }
