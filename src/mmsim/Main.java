@@ -11,16 +11,16 @@ enum RatingSystem {
   PersonalSkill,
 }
 
-@CommandLine.Command(name = "mmsim", mixinStandardHelpOptions = true, version = "0.1.1", description = "Matchmaking Simulator")
+@CommandLine.Command(name = "mmsim", mixinStandardHelpOptions = true, version = "0.1.2", description = "Matchmaking Simulator")
 public class Main implements Callable<Integer> {
   @CommandLine.Option(names = { "-r" }, description = "Which rating system to use. Valid values: ${COMPLETION-CANDIDATES}.")
-  private final RatingSystem ratingSystem = RatingSystem.Elo;
+  private RatingSystem ratingSystem = RatingSystem.Elo;
 
   @CommandLine.Option(names = { "-p", "--players" }, description = "How many players to generate.")
-  private final int playerCount = 15_000;
+  private int playerCount = 15_000;
 
   @CommandLine.Option(names = { "-g", "--games" }, description = "How many games to generate.")
-  private final int gameCount = 150_000;
+  private int gameCount = 150_000;
 
   @Override
   public Integer call() throws Exception {
