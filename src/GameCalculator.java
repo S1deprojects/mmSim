@@ -347,6 +347,8 @@ public class GameCalculator {
             player.append(",");
             player.append(p.getName());
             player.append(",");
+            player.append(p.getSkill());
+            player.append(",");
             player.append(p.getRating());
             player.append(",");
             player.append(p.getVolatility());
@@ -389,6 +391,8 @@ public class GameCalculator {
             player.append(truncatedUUID);
             player.append(",");
             player.append(p.getName());
+            player.append(",");
+            player.append(p.getSkill());
             player.append(",");
             player.append(p.getRating());
             player.append(",");
