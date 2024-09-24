@@ -426,7 +426,7 @@ public class GameCalculator {
     public void outputGamesToCSV (ArrayList<Game> games, Boolean firstTime) throws IOException {
         if(firstTime)
         {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("games.csv"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("games.csv", false));
             bw.write("game_id, winning_team, losing_team\n");
             bw.close();
         }
