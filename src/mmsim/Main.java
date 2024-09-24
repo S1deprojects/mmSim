@@ -11,16 +11,16 @@ enum RatingSystem {
   PersonalSkill,
 }
 
-@CommandLine.Command(name = "mmsim", mixinStandardHelpOptions = true, version = "0.1.0", description = "Matchmaking Simulator")
+@CommandLine.Command(name = "mmsim", mixinStandardHelpOptions = true, version = "0.1.1", description = "Matchmaking Simulator")
 public class Main implements Callable<Integer> {
   @CommandLine.Option(names = { "-r" }, description = "Which rating system to use. Valid values: ${COMPLETION-CANDIDATES}.")
-  private RatingSystem ratingSystem = RatingSystem.Elo;
+  private final RatingSystem ratingSystem = RatingSystem.Elo;
 
   @CommandLine.Option(names = { "-p", "--players" }, description = "How many players to generate.")
-  private int playerCount = 15_000;
+  private final int playerCount = 15_000;
 
   @CommandLine.Option(names = { "-g", "--games" }, description = "How many games to generate.")
-  private int gameCount = 150_000;
+  private final int gameCount = 150_000;
 
   @Override
   public Integer call() throws Exception {
@@ -32,7 +32,7 @@ public class Main implements Callable<Integer> {
     PlayerGenerator playerGenerator = new PlayerGenerator();
     Set<Player> players = playerGenerator.GeneratePlayers(playerCount);
 
-    ArrayList<Player> playerList = new ArrayList<Player>(players);
+    ArrayList<Player> playerList = new ArrayList<>(players);
 
     int ratingDiff = 100;
     GameCalculator gc = new GameCalculator(ratingDiff, playerList, gameCount);
