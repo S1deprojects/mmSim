@@ -1,5 +1,6 @@
+package mmsim;
+
 import java.util.*;
-//Created by S1ft 2024
 
 public class Player implements Comparable<Player> {
     private final String name;

@@ -1,3 +1,5 @@
+package mmsim;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +19,6 @@ public class Team {
     private final ArrayList<Double> skills = new ArrayList<>();
     private final double avgSkill;
     private final double avgRating;
-//Created by S1ft 2024
 
     public Team(Player player1, Player player2, Player player3, Player player4, Player player5) {
         this.player1 = player1;

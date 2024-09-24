@@ -1,5 +1,6 @@
+package mmsim;
+
 import java.util.UUID;
-//Created by S1ft 2024
 
 public class Game {
     private final UUID gameID;

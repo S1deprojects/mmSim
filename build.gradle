@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'org.graalvm.buildtools.native' version '0.10.3'
+}
+
+group 'com.github.s1deprojects'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+        }
+    }
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation 'info.picocli:picocli:4.7.6'
+
+    annotationProcessor 'info.picocli:picocli-codegen:4.7.6'
+}
+
+compileJava {
+    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
+}
+
+graalvmNative {
+    binaries {
+        main {
+            imageName = "mmsim"
+            mainClass = "mmsim.Main"
+            buildArgs.add("-O4")
+        }
+        test {
+            buildArgs.add("-O0")
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
