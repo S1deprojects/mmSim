@@ -60,12 +60,10 @@ public class GameCalculator {
                 }
 
                 for (int i = p1Index; i > (p1Index - indexesBeforePivot); i--) {
-                    ratingDiffArray.add(players.get(i-1));
+                    ratingDiffArray.add(players.get(i - 1));
                 }
             }
-        }
-        else
-        {
+        } else {
             ratingDiffArray.addAll(players);
         }
         /*boolean lessThan9 = false;
@@ -211,9 +209,7 @@ public class GameCalculator {
                 }
                 if ((p.getRating() - pointsLost) >= 25) {
                     p.setRating((int) (p.getRating() - Math.round(pointsLost)));
-                }
-                else
-                {
+                } else {
                     p.setRating(25);
                 }
                 playersUsed.add(p);
@@ -345,12 +341,8 @@ public class GameCalculator {
     }
 
     public void outputPlayersToCSV(ArrayList<Player> players) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter("playerlist.csv"));
-
-        if(!Files.exists(Path.of("playerlist.csv")))
-        {
-            bw.write("id,name,skill,rating,volatility,confidence,games_won,games_played,history\n");
-        }
+        BufferedWriter bw = new BufferedWriter(new FileWriter("playerlist.csv", false));
+        bw.write("id,name,skill,rating,volatility,confidence,games_won,games_played,history\n");
         for (Player p : players) {
             StringBuilder player = new StringBuilder();
             //String truncatedUUID = p.getUuid().toString().replaceAll("-", "");
@@ -373,8 +365,7 @@ public class GameCalculator {
             player.append(",");
             StringBuilder eloHistory = new StringBuilder();
             eloHistory.append("\"[");
-            for (int i : p.getEloHistory())
-            {
+            for (int i : p.getEloHistory()) {
                 eloHistory.append(i);
                 eloHistory.append(",");
             }
@@ -391,9 +382,9 @@ public class GameCalculator {
 
     // outputs results to a csv. yes this is messy, and could use a library instead. I chose not to.
     public void outputPlayersPersonalToCSV(ArrayList<Player> players) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter("playerlistpersonal.csv"));
-
+        BufferedWriter bw = new BufferedWriter(new FileWriter("playerlistpersonal.csv", false));
         bw.write("id,name,skill,rating,volatility,confidence,games_won,games_played,history\n");
+
         for (Player p : players) {
             StringBuilder player = new StringBuilder();
             String truncatedUUID = p.getUuid().toString().replaceAll("-", "");
@@ -415,8 +406,7 @@ public class GameCalculator {
             player.append(",");
             StringBuilder eloHistory = new StringBuilder();
             eloHistory.append("\"[");
-            for (int i : p.getEloHistory())
-            {
+            for (int i : p.getEloHistory()) {
                 eloHistory.append(i);
                 eloHistory.append(",");
             }
@@ -431,9 +421,8 @@ public class GameCalculator {
         bw.close();
     }
 
-    public void outputGamesToCSV (ArrayList<Game> games, Boolean firstTime) throws IOException {
-        if(firstTime)
-        {
+    public void outputGamesToCSV(ArrayList<Game> games, Boolean firstTime) throws IOException {
+        if (firstTime) {
             BufferedWriter bw = new BufferedWriter(new FileWriter("games.csv", false));
             bw.write("game_id, winning_team, losing_team\n");
             bw.close();
@@ -455,8 +444,8 @@ public class GameCalculator {
         allGamesPlayed.clear();
     }
 
-    public void outputGamesPersonalToCSV (ArrayList<Game> games, Boolean firstTime) throws IOException {
-        if(firstTime) {
+    public void outputGamesPersonalToCSV(ArrayList<Game> games, Boolean firstTime) throws IOException {
+        if (firstTime) {
             BufferedWriter bw = new BufferedWriter(new FileWriter("gamespersonal.csv", false));
             bw.write("game_id, winning_team, losing_team\n");
             bw.close();
