@@ -11,7 +11,7 @@ enum RatingSystem {
     PersonalSkill,
 }
 
-@CommandLine.Command(name = "mmsim", mixinStandardHelpOptions = true, version = "0.1.6", description = "Matchmaking Simulator")
+@CommandLine.Command(name = "mmsim", mixinStandardHelpOptions = true, version = "0.1.7", description = "Matchmaking Simulator")
 public class Main implements Callable<Integer> {
     @CommandLine.Option(names = {"-r"}, description = "Which rating system to use. Valid values: ${COMPLETION-CANDIDATES}.")
     private RatingSystem ratingSystem = RatingSystem.PersonalSkill;
