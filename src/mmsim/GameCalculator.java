@@ -387,8 +387,9 @@ public class GameCalculator {
 
         for (Player p : players) {
             StringBuilder player = new StringBuilder();
-            String truncatedUUID = p.getUuid().toString().replaceAll("-", "");
-            player.append(truncatedUUID);
+            //String truncatedUUID = p.getUuid().toString().replaceAll("-", "");
+            String UUID = p.getUuid().toString();
+            player.append(UUID);
             player.append(",");
             player.append(p.getName());
             player.append(",");
