@@ -1,5 +1,5 @@
 plugins {
-    id 'java'
+    id 'application'
     id 'org.graalvm.buildtools.native' version '0.10.3'
 }
 
@@ -19,9 +19,6 @@ sourceSets {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-
     implementation 'info.picocli:picocli:4.7.6'
 
     annotationProcessor 'info.picocli:picocli-codegen:4.7.6'
@@ -38,12 +35,9 @@ graalvmNative {
             mainClass = "mmsim.Main"
             buildArgs.add("-O4")
         }
-        test {
-            buildArgs.add("-O0")
-        }
     }
 }
 
-test {
-    useJUnitPlatform()
+application {
+    mainClassName = "mmsim.Main"
 }
