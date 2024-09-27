@@ -354,7 +354,7 @@ public class GameCalculator {
                     p.getUuid().toString(),
                     String.valueOf(p.getName()),
                     Double.toString(p.getSkill()),
-                    Double.toString(p.getRating()),
+                    Integer.toString(p.getRating()),
                     Double.toString(p.getVolatility()),
                     Double.toString(p.getConfidence()),
                     Integer.toString(p.getGamesWon()),
@@ -373,37 +373,24 @@ public class GameCalculator {
         bw.write("id,name,skill,rating,volatility,confidence,games_won,games_played,history\n");
 
         for (Player p : players) {
-            StringBuilder player = new StringBuilder();
-            //String truncatedUUID = p.getUuid().toString().replaceAll("-", "");
-            String UUID = p.getUuid().toString();
-            player.append(UUID);
-            player.append(",");
-            player.append(p.getName());
-            player.append(",");
-            player.append(p.getSkill());
-            player.append(",");
-            player.append(p.getRating());
-            player.append(",");
-            player.append(p.getVolatility());
-            player.append(",");
-            player.append(p.getConfidence());
-            player.append(",");
-            player.append(p.getGamesWon());
-            player.append(",");
-            player.append(p.getGamesPlayed());
-            player.append(",");
-            StringBuilder eloHistory = new StringBuilder();
-            eloHistory.append("\"[");
+            StringJoiner eloHistory = new StringJoiner(",", "\"[", "]\"");
             for (int i : p.getEloHistory()) {
-                eloHistory.append(i);
-                eloHistory.append(",");
+                eloHistory.add(Integer.toString(i));
             }
-            eloHistory = new StringBuilder(eloHistory.substring(0, eloHistory.length() - 1));
-            eloHistory.append("]\"");
 
-            player.append(eloHistory);
-            player.append("\n");
-            bw.append(player.toString());
+            String[] data = {
+                    p.getUuid().toString(),
+                    String.valueOf(p.getName()),
+                    Double.toString(p.getSkill()),
+                    Integer.toString(p.getRating()),
+                    Double.toString(p.getVolatility()),
+                    Double.toString(p.getConfidence()),
+                    Integer.toString(p.getGamesWon()),
+                    Integer.toString(p.getGamesPlayed()),
+                    eloHistory.toString(),
+            };
+
+            bw.append(String.join(",", data)).append("\n");
         }
 
         bw.close();
