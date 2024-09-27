@@ -346,21 +346,20 @@ public class GameCalculator {
         bw.write("id,name,skill,rating,volatility,confidence,games_won,games_played,history\n");
         for (Player p : players) {
             StringJoiner eloHistory = new StringJoiner(",", "\"[", "]\"");
-            for (int i : p.getEloHistory())
-            {
+            for (int i : p.getEloHistory()) {
                 eloHistory.add(Integer.toString(i));
             }
 
             String[] data = {
-              p.getUuid().toString(),
-              p.getName(),
-              Double.toString(p.getSkill()),
-              Double.toString(p.getRating()),
-              Double.toString(p.getVolatility()),
-              Double.toString(p.getConfidence()),
-              Integer.toString(p.getGamesWon()),
-              Integer.toString(p.getGamesPlayed()),
-              eloHistory.toString(),
+                    p.getUuid().toString(),
+                    String.valueOf(p.getName()),
+                    Double.toString(p.getSkill()),
+                    Double.toString(p.getRating()),
+                    Double.toString(p.getVolatility()),
+                    Double.toString(p.getConfidence()),
+                    Integer.toString(p.getGamesWon()),
+                    Integer.toString(p.getGamesPlayed()),
+                    eloHistory.toString(),
             };
 
             bw.append(String.join(",", data)).append("\n");
@@ -419,8 +418,9 @@ public class GameCalculator {
         BufferedWriter bw = new BufferedWriter(new FileWriter("games.csv", true));
         for (Game g : games) {
             StringBuilder sb = new StringBuilder();
-            String truncatedUUID = g.getGameID().toString().replaceAll("-", "");
-            sb.append(truncatedUUID);
+            //String truncatedUUID = g.getGameID().toString().replaceAll("-", "");
+            String UUID = g.getGameID().toString();
+            sb.append(UUID);
             sb.append(",\"");
             sb.append(g.getWinningTeam().getNames());
             sb.append("\",\"");
@@ -444,7 +444,8 @@ public class GameCalculator {
         for (Game g : games) {
             StringBuilder sb = new StringBuilder();
             String truncatedUUID = g.getGameID().toString().replaceAll("-", "");
-            sb.append(truncatedUUID);
+            String UUID = g.getGameID().toString();
+            sb.append(UUID);
             sb.append(",\"");
             sb.append(g.getWinningTeam().getNames());
             sb.append("\",\"");

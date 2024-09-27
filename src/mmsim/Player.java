@@ -5,7 +5,7 @@ import java.util.Deque;
 import java.util.ArrayDeque;
 
 public class Player implements Comparable<Player> {
-    private final String name;
+    private final int name;
     private final double skill;
     private int rating;
     private double volatility;
@@ -16,7 +16,7 @@ public class Player implements Comparable<Player> {
     //private Set<Game> gameHistory = new HashSet<Game>();
     private final Deque<Integer> eloHistory = new ArrayDeque<>();
 
-    public Player(String name, double skill, int rating, double volatility, double confidence) {
+    public Player(int name, double skill, int rating, double volatility, double confidence) {
         this.name = name;
         this.skill = skill;
         this.rating = rating;
@@ -31,7 +31,7 @@ public class Player implements Comparable<Player> {
         return uuid;
     }
 
-    public String getName() {
+    public int getName() {
         return name;
     }
 
@@ -70,8 +70,7 @@ public class Player implements Comparable<Player> {
         this.eloHistory.addLast(this.rating);
     }
 
-    public void addGameLost()
-    {
+    public void addGameLost() {
         this.gamesPlayed++;
         //this.gameHistory.add(game);
         this.eloHistory.addLast(this.rating);
@@ -90,8 +89,7 @@ public class Player implements Comparable<Player> {
     }
 
     @Override
-    public int compareTo(Player p2)
-    {
+    public int compareTo(Player p2) {
         return this.rating - p2.getRating();
     }
 }
