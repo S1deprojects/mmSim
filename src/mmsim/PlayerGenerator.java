@@ -27,7 +27,6 @@ public class PlayerGenerator {
 
         rngNameGen(count);
         for (Integer name : names) {
-            startingSkill = (double) Math.round(startingSkill * 100d) / 100d;
 
             Player p = new Player(name, startingSkill, defaultELO, defaultVolatility, defaultConfidence);
             playerList.add(p);
