@@ -1,6 +1,6 @@
-FROM ghcr.io/graalvm/graalvm-community:22 AS build
+FROM ghcr.io/graalvm/graalvm-community:23 AS build
 
-ARG GRADLE_VERSION=8.8
+ARG GRADLE_VERSION=8.10
 
 RUN microdnf install -y --nodocs unzip zlib && \
   microdnf clean all
@@ -17,7 +17,7 @@ COPY . /build
 RUN cd /build && \ 
   gradle nativeBuild
 
-FROM debian AS runtime
+FROM debian:bookworm AS runtime
 
 COPY --from=build /build/build/native/nativeCompile/mmsim /usr/local/bin/mmsim
 
