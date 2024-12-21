@@ -18,6 +18,15 @@ sourceSets {
     }
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'mmsim.Main'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 dependencies {
     implementation 'info.picocli:picocli:4.7.6'
 
@@ -33,7 +42,11 @@ graalvmNative {
         main {
             imageName = "mmsim"
             mainClass = "mmsim.Main"
-            buildArgs.add("-O4")
+            buildArgs.add("-O2")
+
+            if (System.getenv("IN_NIX_SHELL")) {
+              buildArgs.add("-H:-CheckToolchain")
+            }
         }
     }
 }
