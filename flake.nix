@@ -18,7 +18,6 @@
         {
           devShells.default = pkgs.mkShell {
             buildInputs = with pkgs; [
-              gcc
               graalvm-ce
               gradle
               jdt-language-server

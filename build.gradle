@@ -33,7 +33,11 @@ graalvmNative {
         main {
             imageName = "mmsim"
             mainClass = "mmsim.Main"
-            buildArgs.add("-O4")
+            buildArgs.add("-O2")
+
+            if (System.getenv("IN_NIX_SHELL")) {
+              buildArgs.add("-H:-CheckToolchain")
+            }
         }
     }
 }
